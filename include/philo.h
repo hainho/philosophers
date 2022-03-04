@@ -11,9 +11,11 @@
 # define SLEEPING 0
 # define THINKING 1
 # define EATING 2
+# define TAKEFORK 3
 
 typedef struct s_philo
 {
+	t_info			*info;
 	pthread_t		thread;
 	pthread_mutex_t	*left;
 	pthread_mutex_t	*right;
@@ -34,6 +36,8 @@ typedef struct	s_info
 	long long		philo_num;
 }	t_info;
 
+// philo_action.c
+void	philo_action(void *p);
 
 // validation.c
 int		check_input(t_info *info);
@@ -46,5 +50,10 @@ int	init(t_info *info, int argc, char **argv);
 
 // free.c
 int	free_all(t_info *info, int return_value);
+
+// utils.c
+long long	ft_atol(const char *str);
+long long	get_cur_time();
+int	print_philo_state(t_info *info, t_philo *philo, int state);
 
 #endif
