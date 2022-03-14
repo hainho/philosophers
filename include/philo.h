@@ -62,5 +62,6 @@ long long	ft_atol(const char *str);
 long long	get_cur_time();
 int	print_philo_state(t_info *info, t_philo *philo, int state);
 void	philo_death_check(t_info *info);
+void	philo_end(t_info *info);
 
 #endif

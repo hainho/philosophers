@@ -65,3 +65,17 @@ void	philo_death_check(t_info *info)
 		}
 	}
 }
+
+void	philo_end(t_info *info)
+{
+	int	idx;
+
+	idx = 0;
+	while (idx < info->philo_num)
+		pthread_join(info->philos[idx++].thread, NULL);
+	idx = 0;
+	while (idx < info->philo_num)
+		pthread_mutex_destroy(&(info->mutexes[idx++]));
+	pthread_mutex_destroy(&(info->print_mutex));
+	return ;
+}

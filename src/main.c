@@ -11,5 +11,6 @@ int	main(int argc, char **argv)
 	if (philo_run(&info) == -1)
 		return (free_all(&info, -1));
 	philo_death_check(&info);
-	return (0);
+	philo_end(&info);
+	return (free_all(&info, 0));
 }
