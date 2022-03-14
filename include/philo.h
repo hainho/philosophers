@@ -21,6 +21,7 @@ typedef struct s_philo
 	pthread_mutex_t	*right;
 	int				idx;
 	long long		eat_time;
+	long long		eat_count;
 	int				state;
 }	t_philo;
 

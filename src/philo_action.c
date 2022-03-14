@@ -22,13 +22,27 @@ static int	philo_take_fork(t_info *info, t_philo *philo)
 	}
 }
 
+static int	philo_takeoff_fork(t_info *info, t_philo *philo)
+{
+	if (philo->idx % 2)
+	{
+		pthread_mutex_unlock(philo->left);
+		pthread_mutex_unlock(philo->right);
+	}
+	else
+	{
+		pthread_mutex_unlock(philo->right);
+		pthread_mutex_unlock(philo->left);
+	}
+}
+
 static int	philo_eat(t_info *info, t_philo *philo)
 {
 	long long	end_time;
 	long long	cur_time;
 
-	if (info->eat_count > 0)
-		info->eat_count--;
+	if (philo->eat_count > 0)
+		(philo->eat_count)--;
 	else
 		return (-1);
 	if (print_philo_state(info, philo, EATING) == -1)
@@ -76,12 +90,13 @@ void	philo_action(void *p)
 
 	philo = p;
 	info = philo->info;
-	while (info->eat_count)
+	while (philo->eat_count)
 	{
 		if (philo_take_fork(info, philo) == -1)
 			return ;
 		if (philo_eat(info, philo) == -1)
 			return ;
+		philo_takeoff_fork(info, philo);
 		if (philo_sleep(info, philo) == -1)
 			return ;
 	}

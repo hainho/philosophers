@@ -5,6 +5,7 @@ void	set_philo(t_info *info, t_philo *philo, int idx)
 	philo->info = info;
 	philo->eat_time = 0;
 	philo->idx = idx + 1;
+	philo->eat_count = info->eat_count;
 	philo->left = &(info->mutexes[idx]);
 	if (idx == info->philo_num - 1)
 		philo->right = &(info->mutexes[0]);
