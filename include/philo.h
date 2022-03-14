@@ -15,7 +15,7 @@
 
 typedef struct s_philo
 {
-	t_info			*info;
+	struct s_info	*info;
 	pthread_t		thread;
 	pthread_mutex_t	*left;
 	pthread_mutex_t	*right;
@@ -40,7 +40,7 @@ typedef struct	s_info
 }	t_info;
 
 // philo_action.c
-void	philo_action(void *p);
+void	*philo_action(void *p);
 
 // validation.c
 int		check_input(t_info *info);

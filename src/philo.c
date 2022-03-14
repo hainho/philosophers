@@ -1,4 +1,4 @@
-#include "philo.h"
+#include "../include/philo.h"
 
 void	set_philo(t_info *info, t_philo *philo, int idx)
 {
@@ -29,8 +29,10 @@ int	philo_run(t_info *info)
 		if (info->philos[idx].eat_time == -1)
 			return (-1);
 		temp = &(info->philos[idx]);
-		if (pthread_create(&(info->philos[idx++]), NULL, philo_action, temp))
+		if (pthread_create(&(info->philos[idx].thread), \
+		NULL, philo_action, temp))
 			return (-1);
+		idx++;
 	}
 	return (0);
 }

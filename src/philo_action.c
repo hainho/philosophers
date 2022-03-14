@@ -20,9 +20,10 @@ static int	philo_take_fork(t_info *info, t_philo *philo)
 		if (print_philo_state(info, philo, TAKEFORK) == -1)
 			return (-1);
 	}
+	return (0);
 }
 
-static int	philo_take_down_fork(t_info *info, t_philo *philo)
+static void	philo_take_down_fork(t_philo *philo)
 {
 	if (philo->idx % 2)
 	{
@@ -83,7 +84,7 @@ static int	philo_sleep(t_info *info, t_philo *philo)
 	return (0);
 }
 
-void	philo_action(void *p)
+void	*philo_action(void *p)
 {
 	t_philo	*philo;
 	t_info	*info;
@@ -93,14 +94,14 @@ void	philo_action(void *p)
 	while (philo->eat_count != 0)
 	{
 		if (philo_take_fork(info, philo) == -1)
-			return ;
+			return (NULL);
 		if (philo_eat(info, philo) == -1)
-			return ;
-		philo_take_down_fork(info, philo);
+			return (NULL);
+		philo_take_down_fork(philo);
 		if (philo_sleep(info, philo) == -1)
-			return ;
+			return (NULL);
 	}
 	if (philo->eat_count == 0)
 		info->simul_state--;
-	return ;
+	return (NULL);
 }
