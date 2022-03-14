@@ -69,8 +69,6 @@ void	philo_death_check(t_info *info)
 			}
 			idx++;
 		}
-		if (info->simul_state == 0)
-			return ;
 	}
 	return ;
 }
