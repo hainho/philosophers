@@ -65,15 +65,15 @@ int	print_philo_state(t_info *info, t_philo *philo, int state)
 	cur_time = get_cur_time();
 	if (cur_time == -1)
 		return (-1);
-	printf("%lld ", (cur_time - info->start_time));
+	cur_time -= info->start_time;
 	if (state == SLEEPING)
-		printf("%d is sleeping", philo->idx);
+		printf("%lld %d is sleeping\n", cur_time, philo->idx);
 	else if (state == EATING)
-		printf("%d is eating", philo->idx);
+		printf("%lld %d is eating\n", cur_time, philo->idx);
 	else if (state == THINKING)
-		printf("%d is thinking", philo->idx);
+		printf("%lld %d is thinking\n", cur_time, philo->idx);
 	else if (state == TAKEFORK)
-		printf("%d has take fork", philo->idx);
+		printf("%lld %d has take fork\n", cur_time, philo->idx);
 	else
 		return (-1);
 	return (0);
