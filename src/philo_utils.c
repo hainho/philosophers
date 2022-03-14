@@ -20,6 +20,11 @@ int	print_philo_state(t_info *info, t_philo *philo, int state)
 		return (-1);
 	cur_time -= info->start_time;
 	pthread_mutex_lock(&(info->print_mutex));
+	if (info->simul_state == 0)
+	{
+		pthread_mutex_unlock(&(info->print_mutex));
+		return (-1);
+	}
 	if (state == SLEEPING)
 		printf("%lld %d is sleeping\n", cur_time, philo->idx);
 	else if (state == EATING)
@@ -56,14 +61,18 @@ void	philo_death_check(t_info *info)
 				info->time_to_death)
 				{
 					pthread_mutex_lock(&(info->print_mutex));
-					printf("%d is die\n", idx + 1);
+					printf("%lld %d died\n", cur_time - info->start_time, idx + 1);
 					info->simul_state = 0;
-					break;
+					pthread_mutex_unlock(&(info->print_mutex));
+					return ;
 				}
 			}
 			idx++;
 		}
+		if (info->simul_state == 0)
+			return ;
 	}
+	return ;
 }
 
 void	philo_end(t_info *info)

@@ -42,7 +42,7 @@ static int	philo_eat(t_info *info, t_philo *philo)
 	long long	end_time;
 	long long	cur_time;
 
-	if (philo->eat_count > 0)
+	if (philo->eat_count != 0)
 		(philo->eat_count)--;
 	else
 		return (-1);
@@ -51,8 +51,9 @@ static int	philo_eat(t_info *info, t_philo *philo)
 	cur_time = get_cur_time();
 	if (cur_time == -1)
 		return (-1);
+	philo->eat_time = cur_time;
 	end_time = cur_time + info->time_to_eat;
-	while (cur_time > end_time)
+	while (cur_time < end_time)
 	{
 		usleep(10);
 		cur_time = get_cur_time();
@@ -74,7 +75,7 @@ static int	philo_sleep(t_info *info, t_philo *philo)
 	if (cur_time == -1)
 		return (-1);
 	end_time = cur_time + info->time_to_sleep;
-	while (cur_time > end_time)
+	while (cur_time < end_time && info->simul_state != 0)
 	{
 		usleep(10);
 		cur_time = get_cur_time();
@@ -91,7 +92,7 @@ void	*philo_action(void *p)
 
 	philo = p;
 	info = philo->info;
-	while (philo->eat_count != 0)
+	while (philo->eat_count != 0 && info->simul_state != 0)
 	{
 		if (philo_take_fork(info, philo) == -1)
 			return (NULL);
@@ -101,7 +102,7 @@ void	*philo_action(void *p)
 		if (philo_sleep(info, philo) == -1)
 			return (NULL);
 	}
-	if (philo->eat_count == 0)
+	if (philo->eat_count == 0 && info->simul_state != 0)
 		info->simul_state--;
 	return (NULL);
 }
