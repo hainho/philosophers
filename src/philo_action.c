@@ -7,6 +7,8 @@ static int	philo_take_fork(t_info *info, t_philo *philo)
 		pthread_mutex_lock(philo->left);
 		if (print_philo_state(info, philo, TAKEFORK) == -1)
 			return (-1);
+		if (info->philo_num == 1)
+			return (-1);
 		pthread_mutex_lock(philo->right);
 		if (print_philo_state(info, philo, TAKEFORK) == -1)
 			return (-1);
@@ -15,6 +17,8 @@ static int	philo_take_fork(t_info *info, t_philo *philo)
 	{
 		pthread_mutex_lock(philo->right);
 		if (print_philo_state(info, philo, TAKEFORK) == -1)
+			return (-1);
+		if (info->philo_num == 1)
 			return (-1);
 		pthread_mutex_lock(philo->left);
 		if (print_philo_state(info, philo, TAKEFORK) == -1)
