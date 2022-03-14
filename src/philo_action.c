@@ -22,7 +22,7 @@ static int	philo_take_fork(t_info *info, t_philo *philo)
 	}
 }
 
-static int	philo_takeoff_fork(t_info *info, t_philo *philo)
+static int	philo_take_down_fork(t_info *info, t_philo *philo)
 {
 	if (philo->idx % 2)
 	{
@@ -90,15 +90,17 @@ void	philo_action(void *p)
 
 	philo = p;
 	info = philo->info;
-	while (philo->eat_count)
+	while (philo->eat_count != 0)
 	{
 		if (philo_take_fork(info, philo) == -1)
 			return ;
 		if (philo_eat(info, philo) == -1)
 			return ;
-		philo_takeoff_fork(info, philo);
+		philo_take_down_fork(info, philo);
 		if (philo_sleep(info, philo) == -1)
 			return ;
 	}
+	if (philo->eat_count == 0)
+		info->simul_state--;
 	return ;
 }

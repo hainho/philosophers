@@ -29,12 +29,14 @@ typedef struct	s_info
 {
 	t_philo			*philos;
 	pthread_mutex_t	*mutexes;
+	pthread_mutex_t	print_mutex;
 	long long		start_time;
 	long long		time_to_eat;
 	long long		time_to_death;
 	long long		time_to_sleep;
 	long long		eat_count;
 	long long		philo_num;
+	long long		simul_state;
 }	t_info;
 
 // philo_action.c
@@ -45,6 +47,7 @@ int		check_input(t_info *info);
 
 // philo.c
 void	set_philo(t_info *info, t_philo *philo, int idx);
+int	philo_run(t_info *info);
 
 // init.c
 int	init(t_info *info, int argc, char **argv);
@@ -52,9 +55,12 @@ int	init(t_info *info, int argc, char **argv);
 // free.c
 int	free_all(t_info *info, int return_value);
 
-// utils.c
+// ft_utils.c
 long long	ft_atol(const char *str);
+
+// philo_utils.c
 long long	get_cur_time();
 int	print_philo_state(t_info *info, t_philo *philo, int state);
+void	philo_death_check(t_info *info);
 
 #endif

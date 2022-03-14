@@ -13,6 +13,8 @@ static int	init_mutex(t_info *info)
 		if (pthread_mutex_init(&(info->mutexes[idx++]), NULL) == 0)
 			return (-1);
 	}
+	if (pthread_mutex_init(&(info->print_mutex), NULL) == 0)
+		return (-1);
 	return (0);
 }
 
@@ -34,6 +36,7 @@ static int	init_info(t_info *info, int argc, char **argv)
 	info->mutexes = NULL;
 	info->philos = NULL;
 	info->philo_num = ft_atoi(argv[1]);
+	info->simul_state = info->philo_num;
 	info->time_to_death = ft_atoi(argv[2]);
 	info->time_to_eat = ft_atoi(argv[3]);
 	info->time_to_sleep = ft_atoi(argv[4]);
@@ -42,6 +45,8 @@ static int	init_info(t_info *info, int argc, char **argv)
 		info->eat_count = ft_atoi(argv[5]);
 	if (check_input(info) == -1)
 		return (-1);
+	if (argc == 5)
+		info->eat_count == -1;
 	return (0);
 }
 

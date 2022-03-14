@@ -8,5 +8,8 @@ int	main(int argc, char **argv)
 		return (-1);
 	if (init(&info, argc, argv) == -1)
 		return (free_all(&info, -1));
+	if (philo_run(&info) == -1)
+		return (free_all(&info, -1));
+	philo_death_check(&info);
 	return (0);
 }

@@ -1,52 +1,5 @@
 #include "../include/philo.h"
 
-static int	ft_isdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	else
-		return (0);
-}
-
-static int	ft_isspace(const char c)
-{
-	if (c == '\t' || c == '\f' || c == '\r')
-		return (1);
-	else if (c == '\v' || c == '\n' || c == ' ')
-		return (1);
-	else
-		return (0);
-}
-
-long long	ft_atol(const char *str)
-{
-	unsigned long long	n;
-	int					sign;
-
-	sign = 1;
-	n = 0;
-	while (ft_isspace(*str))
-		str++;
-	if (*str == '+' || *str == '-')
-	{
-		if (*str == '-')
-			sign = -1;
-		str++;
-	}
-	while (ft_isdigit(*str))
-	{
-		n = n * 10 + (*str - '0');
-		str++;
-		if (n >= LLONG_MAX && sign == 1)
-			return (LLONG_MIN);
-		if (n > LLONG_MAX && sign == -1)
-			return (LLONG_MIN);
-	}
-	if (*str != 0)
-		return (LLONG_MIN);
-	return ((long long)n * sign);
-}
-
 long long	get_cur_time()
 {
 	struct timeval	time;
@@ -66,6 +19,7 @@ int	print_philo_state(t_info *info, t_philo *philo, int state)
 	if (cur_time == -1)
 		return (-1);
 	cur_time -= info->start_time;
+	pthread_mutex_lock(&(info->print_mutex));
 	if (state == SLEEPING)
 		printf("%lld %d is sleeping\n", cur_time, philo->idx);
 	else if (state == EATING)
@@ -75,6 +29,39 @@ int	print_philo_state(t_info *info, t_philo *philo, int state)
 	else if (state == TAKEFORK)
 		printf("%lld %d has take fork\n", cur_time, philo->idx);
 	else
+	{
+		pthread_mutex_unlock(&(info->print_mutex));
 		return (-1);
+	}
+	pthread_mutex_unlock(&(info->print_mutex));
 	return (0);
+}
+
+void	philo_death_check(t_info *info)
+{
+	int			idx;
+	long long	cur_time;
+
+	while (info->simul_state != 0)
+	{
+		idx = 0;
+		while (idx < info->philo_num)
+		{
+			if (info->philos[idx].eat_count != 0 && info->simul_state != 0)
+			{
+				cur_time = get_cur_time();
+				if (cur_time == -1)
+					return ;
+				if (cur_time - info->philos[idx].eat_time > \
+				info->time_to_death)
+				{
+					pthread_mutex_lock(&(info->print_mutex));
+					printf("%d is die\n", idx + 1);
+					info->simul_state = 0;
+					break;
+				}
+			}
+			idx++;
+		}
+	}
 }
