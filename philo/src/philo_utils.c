@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:25 by iha               #+#    #+#             */
-/*   Updated: 2022/03/15 23:34:31 by iha              ###   ########.fr       */
+/*   Updated: 2022/03/16 02:38:40 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	is_death(t_info *info, t_philo *philo)
 {
 	long long	cur_time;
 
-	if (philo->eat_count != 0 && info->simul_state != 0)
+	if (info->simul_state != 0)
 	{
 		cur_time = get_cur_time();
 		if (cur_time == -1)
@@ -62,7 +62,9 @@ static int	is_death(t_info *info, t_philo *philo)
 		{
 			pthread_mutex_lock(&(info->print_mutex));
 			printf("%lld %d died\n", cur_time - info->start_time, philo->idx);
+			pthread_mutex_lock(&(info->state_mutex));
 			info->simul_state = 0;
+			pthread_mutex_unlock(&(info->state_mutex));
 			pthread_mutex_unlock(&(info->print_mutex));
 			return (-1);
 		}
@@ -81,7 +83,9 @@ void	philo_death_check(t_info *info)
 		{
 			if (is_death(info, &(info->philos[idx])) == -1)
 			{
+				pthread_mutex_lock(&(info->state_mutex));
 				info->simul_state = 0;
+				pthread_mutex_unlock(&(info->state_mutex));
 				return ;
 			}
 			idx++;
@@ -101,5 +105,6 @@ void	philo_end(t_info *info)
 	while (idx < info->philo_num)
 		pthread_mutex_destroy(&(info->mutexes[idx++]));
 	pthread_mutex_destroy(&(info->print_mutex));
+	pthread_mutex_destroy(&(info->state_mutex));
 	return ;
 }

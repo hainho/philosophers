@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:39 by iha               #+#    #+#             */
-/*   Updated: 2022/03/15 23:35:41 by iha              ###   ########.fr       */
+/*   Updated: 2022/03/16 02:31:39 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_info
 	t_philo			*philos;
 	pthread_mutex_t	*mutexes;
 	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	state_mutex;
 	long long		start_time;
 	long long		time_to_eat;
 	long long		time_to_death;

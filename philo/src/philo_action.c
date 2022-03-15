@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:13 by iha               #+#    #+#             */
-/*   Updated: 2022/03/15 23:16:55 by iha              ###   ########.fr       */
+/*   Updated: 2022/03/16 02:34:04 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ static int	philo_eat(t_info *info, t_philo *philo)
 	long long	end_time;
 	long long	cur_time;
 
-	if (philo->eat_count != 0)
+	if (philo->eat_count > 0)
 		(philo->eat_count)--;
-	else
-		return (-1);
+	else if (philo->eat_count == 0)
+		philo->eat_count = -1;
 	if (print_philo_state(info, philo, EATING) == -1)
 		return (-1);
 	cur_time = get_cur_time();
@@ -108,7 +108,7 @@ void	*philo_action(void *p)
 
 	philo = p;
 	info = philo->info;
-	while (philo->eat_count != 0 && info->simul_state != 0)
+	while (info->simul_state != 0)
 	{
 		if (philo_take_fork(info, philo) == -1)
 			return (NULL);
@@ -117,8 +117,12 @@ void	*philo_action(void *p)
 		philo_take_down_fork(philo);
 		if (philo_sleep(info, philo) == -1)
 			return (NULL);
+		if (philo->eat_count == 0 && info->simul_state != 0)
+		{
+			pthread_mutex_lock(&(info->state_mutex));
+			info->simul_state--;
+			pthread_mutex_unlock(&(info->state_mutex));
+		}
 	}
-	if (philo->eat_count == 0 && info->simul_state != 0)
-		info->simul_state--;
 	return (NULL);
 }
