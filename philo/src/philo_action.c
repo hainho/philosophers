@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:13 by iha               #+#    #+#             */
-/*   Updated: 2022/03/15 23:14:21 by iha              ###   ########.fr       */
+/*   Updated: 2022/03/15 23:16:55 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	philo_eat(t_info *info, t_philo *philo)
 	else
 		return (-1);
 	if (print_philo_state(info, philo, EATING) == -1)
-			return (-1);
+		return (-1);
 	cur_time = get_cur_time();
 	if (cur_time == -1)
 		return (-1);
@@ -86,7 +86,7 @@ static int	philo_sleep(t_info *info, t_philo *philo)
 	long long	cur_time;
 
 	if (print_philo_state(info, philo, SLEEPING) == -1)
-			return (-1);
+		return (-1);
 	cur_time = get_cur_time();
 	if (cur_time == -1)
 		return (-1);

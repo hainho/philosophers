@@ -6,13 +6,13 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:25 by iha               #+#    #+#             */
-/*   Updated: 2022/03/15 23:14:27 by iha              ###   ########.fr       */
+/*   Updated: 2022/03/15 23:34:31 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-long long	get_cur_time()
+long long	get_cur_time(void)
 {
 	struct timeval	time;
 	long long		cur_time;
@@ -45,39 +45,44 @@ int	print_philo_state(t_info *info, t_philo *philo, int state)
 		printf("%lld %d is thinking\n", cur_time, philo->idx);
 	else if (state == TAKEFORK)
 		printf("%lld %d has take fork\n", cur_time, philo->idx);
-	else
-	{
-		pthread_mutex_unlock(&(info->print_mutex));
-		return (-1);
-	}
 	pthread_mutex_unlock(&(info->print_mutex));
+	return (0);
+}
+
+static int	is_death(t_info *info, t_philo *philo)
+{
+	long long	cur_time;
+
+	if (philo->eat_count != 0 && info->simul_state != 0)
+	{
+		cur_time = get_cur_time();
+		if (cur_time == -1)
+			return (-1);
+		if (cur_time - philo->eat_time > info->time_to_death)
+		{
+			pthread_mutex_lock(&(info->print_mutex));
+			printf("%lld %d died\n", cur_time - info->start_time, philo->idx);
+			info->simul_state = 0;
+			pthread_mutex_unlock(&(info->print_mutex));
+			return (-1);
+		}
+	}
 	return (0);
 }
 
 void	philo_death_check(t_info *info)
 {
 	int			idx;
-	long long	cur_time;
 
 	while (info->simul_state != 0)
 	{
 		idx = 0;
 		while (idx < info->philo_num)
 		{
-			if (info->philos[idx].eat_count != 0 && info->simul_state != 0)
+			if (is_death(info, &(info->philos[idx])) == -1)
 			{
-				cur_time = get_cur_time();
-				if (cur_time == -1)
-					return ;
-				if (cur_time - info->philos[idx].eat_time > \
-				info->time_to_death)
-				{
-					pthread_mutex_lock(&(info->print_mutex));
-					printf("%lld %d died\n", cur_time - info->start_time, idx + 1);
-					info->simul_state = 0;
-					pthread_mutex_unlock(&(info->print_mutex));
-					return ;
-				}
+				info->simul_state = 0;
+				return ;
 			}
 			idx++;
 		}
