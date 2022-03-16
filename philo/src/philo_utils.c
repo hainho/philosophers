@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:25 by iha               #+#    #+#             */
-/*   Updated: 2022/03/16 02:38:40 by iha              ###   ########.fr       */
+/*   Updated: 2022/03/16 23:57:20 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,20 +91,5 @@ void	philo_death_check(t_info *info)
 			idx++;
 		}
 	}
-	return ;
-}
-
-void	philo_end(t_info *info)
-{
-	int	idx;
-
-	idx = 0;
-	while (idx < info->philo_num)
-		pthread_join(info->philos[idx++].thread, NULL);
-	idx = 0;
-	while (idx < info->philo_num)
-		pthread_mutex_destroy(&(info->mutexes[idx++]));
-	pthread_mutex_destroy(&(info->print_mutex));
-	pthread_mutex_destroy(&(info->state_mutex));
 	return ;
 }
