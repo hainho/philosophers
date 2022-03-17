@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:13:48 by iha               #+#    #+#             */
-/*   Updated: 2022/03/18 00:18:10 by iha              ###   ########.fr       */
+/*   Updated: 2022/03/18 00:29:09 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,5 @@ void	philo_end(t_info *info)
 	idx = 0;
 	while (idx < info->philo_num)
 		pthread_join(info->philos[idx++].thread, NULL);
-	return (NULL);
+	return ;
 }
