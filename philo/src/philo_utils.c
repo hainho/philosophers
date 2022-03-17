@@ -6,19 +6,24 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:25 by iha               #+#    #+#             */
-/*   Updated: 2022/03/17 17:16:42 by iha              ###   ########.fr       */
+/*   Updated: 2022/03/18 00:23:20 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-long long	get_cur_time(void)
+long long	get_cur_time(t_info *info)
 {
 	struct timeval	time;
 	long long		cur_time;
 
 	if (gettimeofday(&time, NULL) == -1)
+	{
+		pthread_mutex_lock(&(info->state_mutex));
+		info->simul_state = 0;
+		pthread_mutex_unlock(&(info->state_mutex));
 		return (-1);
+	}
 	cur_time = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 	return (cur_time);
 }
@@ -27,7 +32,7 @@ int	print_philo_state(t_info *info, t_philo *philo, int state)
 {
 	long long	cur_time;
 
-	cur_time = get_cur_time();
+	cur_time = get_cur_time(info);
 	if (cur_time == -1)
 		return (-1);
 	cur_time -= info->start_time;
@@ -55,7 +60,7 @@ static int	is_death(t_info *info, t_philo *philo)
 
 	if (info->simul_state != 0)
 	{
-		cur_time = get_cur_time();
+		cur_time = get_cur_time(info);
 		if (cur_time == -1)
 			return (-1);
 		if (cur_time - philo->eat_time > info->time_to_death)

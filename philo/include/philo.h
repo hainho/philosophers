@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:39 by iha               #+#    #+#             */
-/*   Updated: 2022/03/17 17:16:22 by iha              ###   ########.fr       */
+/*   Updated: 2022/03/18 00:23:00 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int			free_all(t_info *info, int return_value);
 long long	ft_atol(const char *str);
 
 // philo_utils.c
-long long	get_cur_time(void);
+long long	get_cur_time(t_info *info);
 int			print_philo_state(t_info *info, t_philo *philo, int state);
 void		philo_death_check(t_info *info);
 void		philo_end(t_info *info);

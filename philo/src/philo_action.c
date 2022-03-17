@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:13 by iha               #+#    #+#             */
-/*   Updated: 2022/03/17 17:16:18 by iha              ###   ########.fr       */
+/*   Updated: 2022/03/18 00:22:46 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	philo_eat(t_info *info, t_philo *philo)
 		philo->eat_count = -1;
 	if (print_philo_state(info, philo, EATING) == -1)
 		return (-1);
-	cur_time = get_cur_time();
+	cur_time = get_cur_time(info);
 	if (cur_time == -1)
 		return (-1);
 	philo->eat_time = cur_time;
@@ -68,7 +68,7 @@ static int	philo_eat(t_info *info, t_philo *philo)
 	while (cur_time < end_time)
 	{
 		usleep(10);
-		cur_time = get_cur_time();
+		cur_time = get_cur_time(info);
 		if (cur_time == -1)
 			return (-1);
 	}
@@ -83,14 +83,14 @@ static int	philo_sleep(t_info *info, t_philo *philo)
 
 	if (print_philo_state(info, philo, SLEEPING) == -1)
 		return (-1);
-	cur_time = get_cur_time();
+	cur_time = get_cur_time(info);
 	if (cur_time == -1)
 		return (-1);
 	end_time = cur_time + info->time_to_sleep;
 	while (cur_time < end_time && info->simul_state != 0)
 	{
 		usleep(10);
-		cur_time = get_cur_time();
+		cur_time = get_cur_time(info);
 		if (cur_time == -1)
 			return (-1);
 	}
