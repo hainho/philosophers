@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:39 by iha               #+#    #+#             */
-/*   Updated: 2022/03/16 02:31:39 by iha              ###   ########.fr       */
+/*   Updated: 2022/03/17 17:16:22 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_philo
 	int				idx;
 	long long		eat_time;
 	long long		eat_count;
-	int				state;
 }	t_philo;
 
 typedef struct s_info

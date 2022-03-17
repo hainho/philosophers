@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:30 by iha               #+#    #+#             */
-/*   Updated: 2022/03/15 23:14:32 by iha              ###   ########.fr       */
+/*   Updated: 2022/03/17 16:59:15 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	set_philo(t_info *info, t_philo *philo, int idx)
 		philo->right = &(info->mutexes[0]);
 	else
 		philo->right = &(info->mutexes[idx + 1]);
-	philo->state = THINKING;
+	return ;
 }
 
 int	philo_run(t_info *info)
