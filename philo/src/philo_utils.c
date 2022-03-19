@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:25 by iha               #+#    #+#             */
-/*   Updated: 2022/03/18 00:28:27 by iha              ###   ########.fr       */
+/*   Updated: 2022/03/19 15:28:06 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,15 @@ long long	get_cur_time(t_info *info)
 int	print_philo_state(t_info *info, t_philo *philo, int state)
 {
 	long long	cur_time;
-
+	
+	pthread_mutex_lock(&(info->print_mutex));
 	cur_time = get_cur_time(info);
 	if (cur_time == -1)
+	{
+		pthread_mutex_unlock(&(info->print_mutex));
 		return (-1);
+	}
 	cur_time -= info->start_time;
-	pthread_mutex_lock(&(info->print_mutex));
 	if (info->simul_state == 0)
 	{
 		pthread_mutex_unlock(&(info->print_mutex));
@@ -60,19 +63,19 @@ static int	is_death(t_info *info, t_philo *philo)
 
 	if (info->simul_state != 0)
 	{
+		pthread_mutex_lock(&(info->print_mutex));
 		cur_time = get_cur_time(info);
 		if (cur_time == -1)
 			return (-1);
 		if (cur_time - philo->eat_time > info->time_to_death)
 		{
-			pthread_mutex_lock(&(info->print_mutex));
 			printf("%lld %d died\n", cur_time - info->start_time, philo->idx);
 			pthread_mutex_lock(&(info->state_mutex));
 			info->simul_state = 0;
 			pthread_mutex_unlock(&(info->state_mutex));
-			pthread_mutex_unlock(&(info->print_mutex));
 			return (-1);
 		}
+		pthread_mutex_unlock(&(info->print_mutex));
 	}
 	return (0);
 }
