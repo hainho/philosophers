@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:30 by iha               #+#    #+#             */
-/*   Updated: 2022/03/29 12:59:54 by iha              ###   ########.fr       */
+/*   Updated: 2022/03/29 13:18:32 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,19 @@ void	set_philo(t_info *info, t_philo *philo, int idx)
 	return ;
 }
 
-int	philo_run(t_info *info)
+static int	philo_run(t_info *info, int idx)
+{
+	void	*temp;
+
+	info->philos[idx].eat_time = info->start_time;
+	temp = &(info->philos[idx]);
+	if (pthread_create(&(info->philos[idx].thread), \
+	NULL, philo_action, temp))
+		return (-1);
+	return (0);
+}
+
+int	philo_run_all(t_info *info)
 {
 	int		idx;
 	void	*temp;
@@ -37,10 +49,7 @@ int	philo_run(t_info *info)
 		return (-1);
 	while (idx < info->philo_num)
 	{
-		info->philos[idx].eat_time = info->start_time;
-		temp = &(info->philos[idx]);
-		if (pthread_create(&(info->philos[idx].thread), \
-		NULL, philo_action, temp))
+		if (philo_run(info, idx) == -1)
 			return (-1);
 		idx += 2;
 	}
@@ -48,10 +57,7 @@ int	philo_run(t_info *info)
 	idx = 1;
 	while (idx < info->philo_num)
 	{
-		info->philos[idx].eat_time = info->start_time;
-		temp = &(info->philos[idx]);
-		if (pthread_create(&(info->philos[idx].thread), \
-		NULL, philo_action, temp))
+		if (philo_run(info, idx) == -1)
 			return (-1);
 		idx += 2;
 	}

@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:39 by iha               #+#    #+#             */
-/*   Updated: 2022/03/18 00:23:00 by iha              ###   ########.fr       */
+/*   Updated: 2022/03/29 13:11:02 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,14 @@ int			check_input(t_info *info);
 
 // philo.c
 void		set_philo(t_info *info, t_philo *philo, int idx);
-int			philo_run(t_info *info);
+int			philo_run_all(t_info *info);
 
 // init.c
 int			init(t_info *info, int argc, char **argv);
 
 // free.c
 int			free_all(t_info *info, int return_value);
+void		*thread_end(t_info *info, t_philo *philo);
 
 // ft_utils.c
 long long	ft_atol(const char *str);

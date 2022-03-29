@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:13:48 by iha               #+#    #+#             */
-/*   Updated: 2022/03/18 00:29:09 by iha              ###   ########.fr       */
+/*   Updated: 2022/03/29 13:20:18 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	free_all(t_info *info, int return_value)
 
 static void	fork_unlock_destory(t_info *info, int idx)
 {
+	pthread_mutex_unlock(&(info->mutexes[idx]));
 	if (pthread_mutex_destroy(&(info->mutexes[idx])) != 0)
 	{
 		pthread_mutex_unlock(&(info->mutexes[idx]));
@@ -43,6 +44,14 @@ static void	mutex_unlock_destory(pthread_mutex_t *m)
 		return ;
 	}
 	return ;
+}
+
+void	*thread_end(t_info *info, t_philo *philo)
+{
+	pthread_mutex_unlock(philo->left);
+	pthread_mutex_unlock(philo->right);
+	pthread_mutex_unlock(&(info->print_mutex));
+	return (NULL);
 }
 
 void	philo_end(t_info *info)

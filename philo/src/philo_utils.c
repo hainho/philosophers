@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:25 by iha               #+#    #+#             */
-/*   Updated: 2022/03/19 15:28:06 by iha              ###   ########.fr       */
+/*   Updated: 2022/03/29 13:50:41 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ long long	get_cur_time(t_info *info)
 int	print_philo_state(t_info *info, t_philo *philo, int state)
 {
 	long long	cur_time;
-	
+
+	if (info->simul_state == 0)
+		return (-1);
 	pthread_mutex_lock(&(info->print_mutex));
 	cur_time = get_cur_time(info);
 	if (cur_time == -1)
