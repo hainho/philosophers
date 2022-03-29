@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:30 by iha               #+#    #+#             */
-/*   Updated: 2022/03/18 00:23:15 by iha              ###   ########.fr       */
+/*   Updated: 2022/03/29 12:59:54 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,23 @@ int	philo_run(t_info *info)
 		return (-1);
 	while (idx < info->philo_num)
 	{
-		info->philos[idx].eat_time = get_cur_time(info);
-		if (info->philos[idx].eat_time == -1)
-			return (-1);
+		info->philos[idx].eat_time = info->start_time;
 		temp = &(info->philos[idx]);
 		if (pthread_create(&(info->philos[idx].thread), \
 		NULL, philo_action, temp))
 			return (-1);
-		idx++;
+		idx += 2;
+	}
+	usleep(1000);
+	idx = 1;
+	while (idx < info->philo_num)
+	{
+		info->philos[idx].eat_time = info->start_time;
+		temp = &(info->philos[idx]);
+		if (pthread_create(&(info->philos[idx].thread), \
+		NULL, philo_action, temp))
+			return (-1);
+		idx += 2;
 	}
 	return (0);
 }
