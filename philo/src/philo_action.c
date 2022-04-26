@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:13 by iha               #+#    #+#             */
-/*   Updated: 2022/04/26 12:30:05 by iha              ###   ########.fr       */
+/*   Updated: 2022/04/26 12:54:39 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,6 @@ void	*philo_action(void *p)
 		if (philo_eat(info, philo) == -1)
 			return (thread_end(info, philo));
 		philo_take_down_fork(philo);
-		if (philo_sleep(info, philo) == -1)
-			return (thread_end(info, philo));
 		if (philo->eat_count == 0 && info->simul_state != 0)
 		{
 			pthread_mutex_lock(&(info->state_mutex));
@@ -108,6 +106,8 @@ void	*philo_action(void *p)
 				info->simul_state--;
 			pthread_mutex_unlock(&(info->state_mutex));
 		}
+		if (philo_sleep(info, philo) == -1)
+			return (thread_end(info, philo));
 	}
 	return (thread_end(info, philo));
 }
