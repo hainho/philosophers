@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:25 by iha               #+#    #+#             */
-/*   Updated: 2022/03/29 13:50:41 by iha              ###   ########.fr       */
+/*   Updated: 2022/04/26 12:08:06 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,12 @@ int	print_philo_state(t_info *info, t_philo *philo, int state)
 		return (-1);
 	pthread_mutex_lock(&(info->print_mutex));
 	cur_time = get_cur_time(info);
-	if (cur_time == -1)
+	if (cur_time == -1 || info->simul_state == 0)
 	{
 		pthread_mutex_unlock(&(info->print_mutex));
 		return (-1);
 	}
 	cur_time -= info->start_time;
-	if (info->simul_state == 0)
-	{
-		pthread_mutex_unlock(&(info->print_mutex));
-		return (-1);
-	}
 	if (state == SLEEPING)
 		printf("%lld %d is sleeping\n", cur_time, philo->idx);
 	else if (state == EATING)

@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:30 by iha               #+#    #+#             */
-/*   Updated: 2022/03/29 13:18:32 by iha              ###   ########.fr       */
+/*   Updated: 2022/03/29 13:55:40 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static int	philo_run(t_info *info, int idx)
 int	philo_run_all(t_info *info)
 {
 	int		idx;
-	void	*temp;
 
 	idx = 0;
 	info->start_time = get_cur_time(info);

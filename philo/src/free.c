@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:13:48 by iha               #+#    #+#             */
-/*   Updated: 2022/03/29 13:20:18 by iha              ###   ########.fr       */
+/*   Updated: 2022/03/31 21:39:52 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ void	philo_end(t_info *info)
 	int	idx;
 
 	idx = 0;
+	while (idx < info->philo_num)
+		pthread_join(info->philos[idx++].thread, NULL);
+	idx = 0;
 	mutex_unlock_destory(&(info->print_mutex));
 	mutex_unlock_destory(&(info->state_mutex));
 	while (idx < info->philo_num)
 		fork_unlock_destory(info, idx++);
-	idx = 0;
-	while (idx < info->philo_num)
-		pthread_join(info->philos[idx++].thread, NULL);
 	return ;
 }

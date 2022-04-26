@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:13 by iha               #+#    #+#             */
-/*   Updated: 2022/03/29 13:02:12 by iha              ###   ########.fr       */
+/*   Updated: 2022/04/26 12:30:05 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static int	philo_take_fork(t_info *info, t_philo *philo)
 		pthread_mutex_unlock(philo->left);
 		return (-1);
 	}
+	if (info->philo_num == 1)
+		return (-1);
 	pthread_mutex_lock(philo->right);
 	if (print_philo_state(info, philo, TAKEFORK) == -1)
 	{
