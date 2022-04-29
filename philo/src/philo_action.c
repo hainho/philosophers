@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:13 by iha               #+#    #+#             */
-/*   Updated: 2022/04/26 12:54:39 by iha              ###   ########.fr       */
+/*   Updated: 2022/04/29 17:27:06 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static int	philo_eat(t_info *info, t_philo *philo)
 		if (cur_time == -1)
 			return (-1);
 	}
-	philo->eat_time = end_time;
 	return (0);
 }
 
