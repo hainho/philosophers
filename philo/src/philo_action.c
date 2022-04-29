@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:13 by iha               #+#    #+#             */
-/*   Updated: 2022/04/29 17:27:06 by iha              ###   ########.fr       */
+/*   Updated: 2022/04/29 18:06:09 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	philo_sleep(t_info *info, t_philo *philo)
 
 	if (print_philo_state(info, philo, SLEEPING) == -1)
 		return (-1);
-	cur_time = philo->eat_time;
+	cur_time = philo->eat_time + info->time_to_eat;
 	end_time = cur_time + info->time_to_sleep;
 	while (cur_time < end_time && info->simul_state != 0)
 	{

@@ -1,6 +1,5 @@
 CC = gcc
 CFLAGS = -Wextra -Werror -Wall
-CFLAGS += -g
 
 NAME = philo
 

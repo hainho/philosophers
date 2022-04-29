@@ -6,7 +6,7 @@
 /*   By: iha <iha@student.42.kr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 23:14:25 by iha               #+#    #+#             */
-/*   Updated: 2022/04/26 12:08:06 by iha              ###   ########.fr       */
+/*   Updated: 2022/04/29 18:06:31 by iha              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ long long	get_cur_time(t_info *info)
 		pthread_mutex_lock(&(info->state_mutex));
 		info->simul_state = 0;
 		pthread_mutex_unlock(&(info->state_mutex));
-		return (-1);
 	}
+	if (info->simul_state == 0)
+		return (-1);
 	cur_time = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 	return (cur_time);
 }
